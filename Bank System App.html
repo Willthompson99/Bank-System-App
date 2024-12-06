@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 2133 - Bank System App</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
+
+  <style>
+        body 
+        {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'Ubuntu', 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        header, footer 
+        {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        header h1, footer p 
+        {
+            margin: 0;
+        }
+        section 
+        {
+            padding: 2rem;
+            margin: 1rem auto;
+            max-width: 1000px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 20px
+        }
+        h2 
+        {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+        }
+        h3 
+        {
+            color: #ff0000;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 0.5rem;
+        }
+        .table-container 
+        {
+            overflow-x: auto;
+            text-align: justify;
+        }
+        table 
+        {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td 
+        {
+            padding: 0.75rem;
+            text-align: center; /* Center the text */
+            border: 1px solid #dee2e6;
+        }
+        th 
+        {
+            background-color: #007bff;
+            color: #fff;
+        }
+        ul 
+        {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        ul ul 
+        {
+            list-style-type: circle;
+        }
+        a 
+        {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover 
+        {
+            text-decoration: underline;
+        }
+        .highlighted 
+        {
+            background-color: #ffeb3b;
+            padding: 0 0.25rem;
+        }
+        .colored-word 
+        {
+            color: #dc3545;
+        }
+        .center-container 
+        {
+            text-align: center;
+        }
+        .text-container 
+        {
+            text-align: justify;
+            margin-top: 1rem;
+        }
+        .demo-link 
+        {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .method-name 
+        {
+            color: #20f903;
+        }
+  </style>
+</head>
+
+<body>
+    <header>
+        <div class="center-container">
+            <h1>Bank System</h1>
+        </div>
+    </header>
+    
+    <main>
+        <section id="Overview">
+            <h2>Overview</h2>
+                <div class="text-container">
+                    <p>The Bank System project is a Java application designed to simulate a banking system, allowing users to perform various banking operations such as depositing funds, withdrawing funds, transferring money between accounts, updating account information, and canceling accounts.</p>
+                </div>
+        </section>
+    
+        <section id="Design-Principles">
+            <h2>Design Principles</h2>
+                <div class="text-container">
+                    <ul>
+                        <li><span class="colored-word">Best Programming Practices</span>:
+                            <ul>
+                                <li><strong>Utilization of try-catch statements</strong> to handle invalid user inputs.</li>
+                                <li><strong>Proper exception handling</strong> when dealing with file operations.</li>
+                                <li><strong>Consistent use of Javadoc comments</strong> to describe methods and classes.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul> 
+                        <li><span class="colored-word">Object-Oriented Programming (OOP) Concepts</span>:
+                            <ul>
+                                <li><strong>Encapsulation:</strong> Data hiding and protection through private member variables and public accessor methods.</li>
+                                <li><strong>Inheritance:</strong> Hierarchical organization of classes with common attributes and behaviors.</li>
+                                <li><strong>Polymorphism:</strong> Methods exhibiting different behavior based on the object they are called upon.</li>
+                                <li><strong>Interfaces:</strong> Contracts defining a set of methods that implementing classes must override.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+        </section>
+    
+        <section id="Bank System Hierarchy Files">
+            <h2>Bank System Hierarchy Files</h2>
+                <div class="text-container">
+                    <p>The Bank System is composed of three primary files. Each file contains and implements a set of banking operations as shown below:</p>
+
+                    <h3>App.java File</h3>
+                        <p>The <strong>App</strong> class responsible for managing user interactions and file operations. This file contains and implements the following methods:</p>
+                            <ul>
+                                <li><span class="colored-word">loadUserData:</span> This method is only called upon running the app. It loads user data from a CSV file (permanent storage) into the temporary storage of the application . If no CSV file exists, the application starts with an empty user list.</li>
+                                <li><span class="colored-word">saveUserData:</span> This method is only called upon closing the app. It saves user data to the permanent storage (CSV file).</li>
+                                <li><span class="colored-word">generateRoutingNumber:</span> This method is to generate a unique routing number for a new user. Bank users must have unique routing numbers associated their accounts.</li>
+                                    <ul>
+                                        <li>A routing number is composed of 10 random digits, and it is randomly generated by the system.</li>
+                                        <li>A routing number may start with zeros (e.g., 0007742318). That means routing numbers should be treated as strings to avoid discarding zeros at the beginning if they were to be treated as numbers.</li>
+                                    </ul>
+                                <li><span class="colored-word">signUp:</span> This method is to allow new users to create an account.</li>
+                                    <ul>
+                                        <li>Users can register by providing their full name, username, password, email, and initial deposit amount. Each account is assigned a unique routing number.</li>
+                                        <li>An arrayList (temporary storage) should be used to store the user data during the runtime. The elements of the arrayList are the records in the CSV file (permanent storage).</li>
+                                        <li>Users must have <strong>unique emails</strong>. An email is composed of user's <strong>username</strong> followed by <strong>@bank.com </strong>(e.g., jsmith@bank.com).</li>
+                                    </ul>
+                                <li><span class="colored-word">logIn:</span> This method is to allow existing users to log in and perform banking operations.</li>
+                                <li><span class="colored-word">main:</span> This method is the entry point of the application.</li>
+                            </ul>
+
+                    <h3>User.java File</h3>
+                        <p>The <strong>User</strong> class representing a bank user, implementing the BankActions interface. The <strong>User</strong> class is also used as a base class of another class (subclass) called <strong>RegularUser</strong>.</p>
+                        <p>The <strong>User</strong> class file contains and implements the following methods:</p>
+                            <ul>
+                                <li><span class="colored-word">constructor:</span> Initializes user attributes including full name, username, password, email, routing number, checking balance, and saving balance.</li>
+                                <li><span class="colored-word">getters and setters:</span> Accessors and mutators for all user attributes.</li>
+                                <li><span class="colored-word">home:</span> Displays user's account information page.</li>
+                                <li><span class="colored-word">deposit:</span> Allows user to deposit funds into their account.</li>
+                                    <ul>
+                                        <li>Each user in the system possesses both <strong>checking</strong> and <strong>savings</strong> accounts.</li>
+                                        <li>When depositing into the checking account including the initial deposit when signing up:</li>
+                                            <ul>
+                                                <li>2% of the deposit amount is added to the savings account balance.</li>
+                                                <li>The remaining amount (98%) is added to the checking account balance.</li>
+                                            </ul>
+                                    </ul>
+                                <li><span class="colored-word">withdraw:</span> Allows user to withdraw funds from their account.</li>
+                                    <ul>
+                                        <li>When withdrawing from the savings account:</li>
+                                            <ul>
+                                                <li>5% of the withdrawal amount is designated as a withdrawal fee.</li>
+                                                <li>Ensures that the withdrawal amount plus the withdrawal fee does not exceed the savings account balance.</li>
+                                                <li>The withdrawal amount plus the withdrawal fee is deducted from the savings account balance.</li>
+                                            </ul>
+                                    </ul>
+                                <li><span class="colored-word">update:</span> Allows user to update their account information.</li>
+                                    <ul>
+                                        <li>Users can only update their full names and passwords.</li>
+                                    </ul>
+                                <li><span class="colored-word">transfer:</span> Allows user to transfer funds to another account.</li>
+                                    <ul>
+                                        <li>Users can transfer money only to accounts within the same bank (internal accounts). For example, if a user attempts to transfer money to an account with the email 'example@gmail.com', the system will generate an error message. The message will state that the recipient's email must be associated with the bank's domain, such as '@bank', rather than an external domain like '@gmail'.</li>
+                                        <li>By default, all money transfers are done on <strong>checking</strong> accounts.</li>
+                                    </ul>
+                                <li><span class="colored-word">cancel:</span> Allows user to cancel (delete) their account.</li>
+                            </ul>
+            
+                        <p><span class="highlighted">The <strong>User</strong> class file also contains and implements the <strong>RegularUser</strong> class. The <strong>RegularUser</strong> class is a subclass of the <strong>User</strong> class (inherited from the User class) representing regular bank users. The purpose of using the <strong>RegularUser</strong> class is to give users different account priviliages. In this case, all users have regular account privileges. The <strong>RegularUser</strong> class contains and implements only one method:</span></p>
+                            <ul>
+                                <li><span class="colored-word">constructor:</span> Calls the constructor of the superclass (User) to initialize user attributes. It represents bank users with regular account privileges, inheriting behaviors from the <strong>User</strong> class.</li>
+                            </ul>
+                  
+                    <h3>BankActions.java File</h3>
+                        <p>An interface file defining the core banking actions that must be implemented by the <strong>User</strong> class. The BankActions interface must have the following <strong>abstract methods</strong> declared:</p>
+                            <ul>
+                                <li><span class="colored-word">home:</span> Displays user's account information page.</li>
+                                <li><span class="colored-word">deposit:</span> Allows user to deposit funds into their account.</li>
+                                <li><span class="colored-word">withdraw:</span> Allows user to withdraw funds from their account.</li>
+                                <li><span class="colored-word">update:</span> Allows user to update their account information.</li>
+                                <li><span class="colored-word">transfer:</span> Allows user to transfer funds to another internal account.</li>
+                                <li><span class="colored-word">cancel:</span> Allows user to cancel (delete) their account.</li>
+                            </ul>
+                </div>
+        </section>
+    
+        <section>
+            <h2>Sample Output</h2>
+                <div class="text-container">
+                    <p>Below is a sample output of the banking operations:</p>
+                        <pre style="color: rgb(115, 66, 66); font-family: 'Ubuntu'; font-size: 16px; font-weight: bold;">
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        s
+        Enter your full name: Asaad Alhoubi
+        Enter a username: asaad
+        Enter a password: password
+        Enter your email address (your_username@bank.com): asaad@gmail.com
+        Enter a valid email (your_username@bank.com): asaad@bank.com
+        Enter your initial deposit amount: $1000
+        Account created successfully.
+
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        s
+        Enter your full name: John Smith
+        Enter a username: john
+        Enter a password: jpass
+        Enter your email address (your_username@bank.com): asaad@bank.com
+        Email already exists....enter a new email: john@okstate.edu
+        Enter a valid email (your_username@bank.com): john@bank.com
+        Enter your initial deposit amount: $2000
+        Account created successfully.
+
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        L
+        Enter your username: asaad
+        Enter your password: passw   
+        Invalid username or password.
+        *******Fictional Bank Page********
+        ***** Enter your choice: (S)ign Up
+        ***** Enter your choice: (L)ogIn
+        ***** Enter your choice: (E)xit
+        **********************************
+        L
+        Enter your username: asaad
+        Enter your password: password
+        Login successful....
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        H
+        Full name: Asaad Alhoubi
+        Username: asaad
+        Password: password
+        Email: asaad@bank.com
+        Routing number: 631957208
+        Checking account balance: $980.0
+        Saving account balance: $20.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        D
+        Which account would you like to deposit into?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 1
+        Enter the amount to deposit: $1000
+        Deposit successful. New checking account balance: $1960.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        D
+        Which account would you like to deposit into?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 2
+        Enter the amount to deposit: $500
+        Deposit successful. New saving account balance: $540.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        U
+        Updating profile...
+        Enter your new full name: Asaad Althoubi
+        Enter your new password: pass4asaad
+        Profile updated successfully!
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        T
+        Users can transfer money only to accounts associated with the same bank (internal accounts)!
+        Enter the recipient's email: johnSmith@bank.com
+        No account associated with the entered email!
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        T
+        Users can transfer money only to accounts associated with the same bank (internal accounts)!
+        Enter the recipient's email: john@bank.com
+        Enter the amount to transfer: $500
+        Transfer successful.
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        H
+        Full name: Asaad Althoubi
+        Username: asaad
+        Password: pass4asaad
+        Email: asaad@bank.com
+        Routing number: 631957208
+        Checking account balance: $1460.0
+        Saving account balance: $540.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        L
+        
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        L
+        Enter your username: john
+        Enter your password: password
+        Login successful....
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        H
+        Full name: John Smith
+        Username: john
+        Password: password
+        Email: john@bank.com
+        Routing number: 812494401
+        Checking account balance: $2460.0
+        Saving account balance: $40.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 1
+        Enter the amount to withdraw: $500
+        Withdrawal successful. New checking account balance: $1960.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 2
+        Enter the amount to withdraw: $500
+        Insufficient funds in saving account.
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 2
+        Enter the amount to withdraw: $300
+        Insufficient funds in saving account.
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        H
+        Full name: John Smith
+        Username: john
+        Password: password
+        Email: john@bank.com
+        Routing number: 812494401
+        Checking account balance: $1960.0
+        Saving account balance: $40.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 2
+        Enter the amount to withdraw: $20
+        Withdrawal successful. Withdrawal fee of $1.0 has been applied. New saving account balance: $19.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        L
+
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        S
+        Enter your full name: Kia Troy
+        Enter a username: kia
+        Enter a password: pass4kia
+        Enter your email address (your_username@bank.com): kia@bank.com
+        Enter your initial deposit amount: $4000
+        Account created successfully.
+        
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        L
+        Enter your username: kia
+        Enter your password: pass4kia
+        Login successful....
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        H
+        Full name: Kia Troy
+        Username: kia
+        Password: pass4kia
+        Email: kia@bank.com
+        Routing number: 902715996
+        Checking account balance: $3920.0
+        Saving account balance: $80.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 1
+        Enter the amount to withdraw: $4000
+        Insufficient funds in checking account.
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 1
+        Enter the amount to withdraw: $3920
+        Withdrawal successful. New checking account balance: $0.0
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 2 
+        Enter the amount to withdraw: $80
+        Insufficient funds in saving account.
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        W
+        Which account would you like to withdraw from?
+        1. Checking account
+        2. Saving account
+        Enter your choice: 2
+        Enter the amount to withdraw: $75
+        Withdrawal successful. Withdrawal fee of $3.75 has been applied. New saving account balance: $1.25
+        *********Main Menu**********
+        Enter your choice: (H)ome
+        Enter your choice: (D)eposit
+        Enter your choice: (W)ithdraw
+        Enter your choice: (U)pdate
+        Enter your choice: (T)ransfer
+        Enter your choice: (C)ancel
+        Enter your choice: (L)ogOut
+        *****************************
+        C
+        Would you like to delete your account? Y/N: Y
+        Enter your username: kia
+        Enter your password: pass4kia
+        Your account has been deleted successfully!
+        
+        *******************************************************
+        *                                         Bank System Page                                 *
+        *******************************************************
+        *  Select an option:                                                                           *
+        *    (S) Sign Up                                                                                     *
+        *    (L) Log In                                                                                        *
+        *    (E) Exit                                                                                            *
+        *******************************************************
+        E
+        PS C:\Users\Asaad\BankSystemApp\src> 
+                        </pre>
+                    
+                        <p>Click <a href="https://cs.okstate.edu/~aalthou/BankSystemApp/Bank_System_App.mp4">here</a> to watch a short demonstration of the Bank System App and its various operations.</p>
+                    </div>
+        </section>
+
+        <section>
+            <h2>Important Notes</h2>
+                <div class="text-container">
+                    <p>Your implementation must adhere to the following programming requirements:</p>
+                        <ul>
+                            <li>On the 'Bank System Page', a user can select an option by typing the choice in either uppercase or lowercase.</li>
+                            <li>The temporary storage (ArrayList) must hold items of type <strong>User</strong> objects. Therefore, the ArrayList should be declared as <strong>ArrayList&lt;User&gt;</strong>, where <strong>User</strong> is a class.</li>
+                            <li>Your implementation of the transfer and withdraw methods must handle 'insufficient funds' scenarios as specified in the sample output.</li>
+                            <li>If a user chooses to cancel their account, they should be redirected to the 'Bank System Page' after successful deletion, as specified in the sample output.</li>
+                            <li>When copying (writing) data from the temporary storage (ArrayList) to the permanent storage (CSV file), the original data in the CSV file must be overwritten. To achieve this, use <strong>StandardOpenOption.TRUNCATE_EXISTING</strong> when importing the <strong>StandardOpenOption</strong> class from the <strong>nio</strong> package as <strong>java.nio.file.StandardOpenOption</strong>.</li>
+                        </ul>
+                </div>
+        </section>
+
+        <section id="Submission">
+            <h2>Submission</h2>
+               <div class="text-container">
+                    <ul>
+                        <li>Students are required to complete the functionality of their final project and submit it on Canvas by <strong>Friday, November 15, 2024</strong>. A comprehensive description of the final project will be posted on Canvas on <strong>Monday, September 30, 2024</strong>.</li>
+                        <li>Students may choose to demonstrate their final project to the professor before submission to ensure its functionality. A zoom-based or face-to-face meetings can be arranaged for this purpose.</li>
+                        <li>Late submission will not be accepted for the final project.</li>
+                        <li>Students are required to turn in the final project files, which must be ".java" files. They may also choose to compress their entire project package and submit it as a compressed file (e.g., .zip, .rar).</li>
+                    </ul>
+                </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Oklahoma State University -  Department of Computer Science</p>
+    </footer>
+    
+</body>
+</html>
